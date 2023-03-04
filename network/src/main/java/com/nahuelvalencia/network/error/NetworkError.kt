@@ -23,7 +23,7 @@ internal fun Throwable.networkError() = when (this) {
         localizedMessage ?: "Error parsing Json data error"
     )
     is HttpException -> networkError()
-    else -> NetworkError.Unknown("Unknown error")
+    else -> NetworkError.Unknown("Unknown error: ${this.message} - ${this.cause}")
 }
 
 fun HttpException.networkError(): NetworkError = when {
