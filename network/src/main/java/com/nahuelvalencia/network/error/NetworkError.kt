@@ -24,7 +24,7 @@ internal fun Throwable.networkError() = when (this) {
     )
     is HttpException -> networkError()
     else -> NetworkError.Unknown("Unknown error")
-}.left()
+}
 
 fun HttpException.networkError(): NetworkError = when {
     code() == 404 -> NetworkError.ResourceNotFound(localizedMessage ?: "Resource not found")
