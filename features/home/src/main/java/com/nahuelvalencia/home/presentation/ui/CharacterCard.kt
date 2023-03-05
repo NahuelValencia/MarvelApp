@@ -10,12 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.nahuelvalencia.home.R
 import com.nahuelvalencia.home.domain.model.MarvelCharacter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,15 +23,14 @@ fun CharacterCard(character: MarvelCharacter) {
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(0.7f)
-            .padding(8.dp)
+            .padding(4.dp)
     ) {
         Box {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = character.image,
                 contentDescription = "${character.name} poster picture",
-                contentScale = ContentScale.FillBounds,
-                error = painterResource(id = R.drawable.placeholder_thumbnail_marvel)
+                contentScale = ContentScale.FillBounds
             )
 
             Text(
