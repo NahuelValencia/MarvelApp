@@ -39,17 +39,18 @@ class NetworkModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(loggingInterceptorLevel())
 
-
     @Provides
     fun providesOkHttpClient(
-        @Named("UrlBaseConfig") urlConfig: Interceptor,
+        @Named("urlBaseConfig") urlConfig: Interceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
-        OkHttpClient.Builder().addInterceptor(urlConfig).addInterceptor(httpLoggingInterceptor)
+        OkHttpClient.Builder()
+            .addInterceptor(urlConfig)
+            .addInterceptor(httpLoggingInterceptor)
             .build()
 
     @Provides
-    @Named("UrlBaseConfig")
+    @Named("urlBaseConfig")
     fun providesURLBaseConfigurationInterceptor(): Interceptor = Interceptor { chain ->
         val ts = Timestamp(System.currentTimeMillis()).time.toString()
         val md5Hash = md5("$ts${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}")
@@ -66,7 +67,10 @@ class NetworkModule {
     fun providesRetrofit(
         converterFactory: Converter.Factory,
         okHttpClient: OkHttpClient
-    ) = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
-        .addConverterFactory(converterFactory).build()
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(converterFactory)
+        .build()
 
 }

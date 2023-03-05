@@ -1,5 +1,7 @@
 package com.nahuelvalencia.network.di
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,8 +14,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class JsonSerializationFactoryModule {
 
     @Provides
-    fun provideMoshiConverterFactory(): Converter.Factory {
-        return MoshiConverterFactory.create()
+    fun providesMoshi(): Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    @Provides
+    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory {
+        return MoshiConverterFactory.create(moshi)
     }
 
 }

@@ -23,8 +23,8 @@ internal fun Throwable.networkError() = when (this) {
         localizedMessage ?: "Error parsing Json data error"
     )
     is HttpException -> networkError()
-    else -> NetworkError.Unknown("Unknown error")
-}.left()
+    else -> NetworkError.Unknown("Unknown error: ${this.message} - ${this.cause}")
+}
 
 fun HttpException.networkError(): NetworkError = when {
     code() == 404 -> NetworkError.ResourceNotFound(localizedMessage ?: "Resource not found")

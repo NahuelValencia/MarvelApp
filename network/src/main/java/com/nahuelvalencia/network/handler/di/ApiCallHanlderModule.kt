@@ -10,5 +10,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 class ApiCallHandlerModule {
     @Provides
-    fun providesApiCallHandler() = ApiCallHandler()
+    fun providesApiCallHandler(): ApiCallHandler = ApiCallHandler()
+
 }

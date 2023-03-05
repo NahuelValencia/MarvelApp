@@ -1,6 +1,7 @@
 package com.nahuelvalencia.network.handler
 
 import arrow.core.Either
+import arrow.core.left
 import arrow.core.right
 import com.nahuelvalencia.network.error.NetworkError
 import com.nahuelvalencia.network.error.networkError
@@ -18,7 +19,7 @@ class ApiCallHandler {
         val response = request()
         parser?.invoke(response) ?: response.right()
     } catch (throwable: Throwable) {
-        throwable.networkError()
+        throwable.networkError().left()
     }
 
 }
