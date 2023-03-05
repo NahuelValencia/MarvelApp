@@ -18,6 +18,7 @@ internal class CharacterDto(
     private fun createImageUrl(thumbnail: ThumbnailDto): String {
         //TODO take into account device size and set the size url. Should be done on domain module?
         //https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_xlarge.jpg
-        return "${thumbnail.path}/portrait_xlarge.${thumbnail.extension}"
+        val secureUrl = thumbnail.path.replace("http://", "https://")
+        return "$secureUrl/portrait_xlarge.${thumbnail.extension}"
     }
 }
