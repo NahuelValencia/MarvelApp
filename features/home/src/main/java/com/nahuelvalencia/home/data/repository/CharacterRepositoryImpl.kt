@@ -16,7 +16,9 @@ internal class CharacterRepositoryImpl(
         dataSource.getCharacters().mapLeft { networkError ->
             networkError //TODO: Map NetworkError to a feature specific Error
         }.flatMap { responseDto ->
-            responseDto.data!!.results.map { it.toDomain() }.right()
+            responseDto.data.results.map { characterDto ->
+                characterDto.toDomain()
+            }.right()
         }
 
 }

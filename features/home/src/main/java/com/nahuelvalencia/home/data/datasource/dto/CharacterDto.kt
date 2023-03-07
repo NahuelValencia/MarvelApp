@@ -1,17 +1,17 @@
 package com.nahuelvalencia.home.data.datasource.dto
 
 import com.nahuelvalencia.home.domain.model.MarvelCharacter
+import com.squareup.moshi.JsonClass
 
-internal class CharacterDto(
-    private val id: Long,
-    private val name: String,
-    private val description: String,
-    private val thumbnail: ThumbnailDto
+@JsonClass(generateAdapter = true)
+internal data class CharacterDto(
+    val id: Long,
+    val name: String,
+    val thumbnail: ThumbnailDto
 ) {
     fun toDomain() = MarvelCharacter(
         id = id,
         name = name,
-        description = description,
         image = createImageUrl(thumbnail)
     )
 
