@@ -13,11 +13,10 @@ import com.nahuelvalencia.network.error.networkError
 class ApiCallHandler {
 
     suspend fun <T> handleResponse(
-        parser: ((T) -> Either<NetworkError, T>)? = null,
         request: suspend () -> T
     ): Either<NetworkError, T> = try {
         val response = request()
-        parser?.invoke(response) ?: response.right()
+        response.right()
     } catch (throwable: Throwable) {
         throwable.networkError().left()
     }

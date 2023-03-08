@@ -1,6 +1,7 @@
 package com.nahuelvalencia.home.presentation.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,12 +19,13 @@ import com.nahuelvalencia.home.domain.model.MarvelCharacter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterCard(character: MarvelCharacter) {
+internal fun CharacterCard(character: MarvelCharacter, onClick: (Long) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(0.7f)
             .padding(4.dp)
+            .clickable { onClick(character.id) }
     ) {
         Box {
             AsyncImage(
@@ -57,8 +59,8 @@ private fun PreviewCharacterCard() {
         character = MarvelCharacter(
             id = 1234,
             name = "3-D Man",
-            description = "God of thunder",
             image = "https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-        )
+        ),
+        onClick = {}
     )
 }

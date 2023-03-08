@@ -1,5 +1,6 @@
 package com.nahuelvalencia.home.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,14 +23,16 @@ fun HomeScreen(
     onClick: (Long) -> Unit
 ) {
     HomeScaffold(
-        state = viewModel.state.collectAsState().value
+        state = viewModel.state.collectAsState().value,
+        onClick = onClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScaffold(
-    state: UiState
+internal fun HomeScaffold(
+    state: UiState,
+    onClick: (Long) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -38,16 +41,27 @@ fun HomeScaffold(
             )
         }
     ) { paddingValues ->
-        HomeScreenContent(paddingValues = paddingValues, state = state)
+        HomeScreenContent(paddingValues = paddingValues, state = state, onClick = onClick)
     }
 
 }
 
 @Composable
-private fun HomeScreenContent(paddingValues: PaddingValues, state: UiState) {
+private fun HomeScreenContent(
+    paddingValues: PaddingValues,
+    state: UiState,
+    onClick: (Long) -> Unit
+) {
     when (state) {
-        is UiState.Content -> CharacterList(characters = state.list, paddingValues = paddingValues)
-        is UiState.Error -> TODO()
+        is UiState.Content -> CharacterList(
+            characters = state.list,
+            paddingValues = paddingValues,
+            onClick = onClick
+        )
+        is UiState.Error -> {
+            //TODO("Handle error state")
+            Log.i("HomeScreen", "Error ${state.error}")
+        }
         UiState.Loading -> LoadingStateComponent()
     }
 }
@@ -60,7 +74,11 @@ private fun LoadingStateComponent() {
 }
 
 @Composable
-private fun CharacterList(characters: List<MarvelCharacter>, paddingValues: PaddingValues) {
+private fun CharacterList(
+    characters: List<MarvelCharacter>,
+    paddingValues: PaddingValues,
+    onClick: (Long) -> Unit
+) {
     val lazyGridState = rememberLazyGridState()
 
     LazyVerticalGrid(
@@ -72,7 +90,7 @@ private fun CharacterList(characters: List<MarvelCharacter>, paddingValues: Padd
     ) {
         items(characters) { item ->
             key(item.id) {
-                CharacterCard(character = item)
+                CharacterCard(character = item, onClick = onClick)
             }
         }
     }
