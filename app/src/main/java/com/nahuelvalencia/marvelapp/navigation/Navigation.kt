@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.nahuelvalencia.details.presentation.ui.DetailsScreen
+import com.nahuelvalencia.details.presentation.screen.DetailsScreen
 import com.nahuelvalencia.home.presentation.ui.HomeScreen
 
 @Composable
