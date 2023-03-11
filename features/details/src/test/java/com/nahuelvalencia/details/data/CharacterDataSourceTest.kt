@@ -1,9 +1,9 @@
 package com.nahuelvalencia.details.data
 
-import com.nahuelvalencia.details.coroutine.MainCoroutineScopeRule
 import com.nahuelvalencia.details.data.datasource.CharacterApi
-import com.nahuelvalencia.details.data.datasource.CharacterDataSource
+import com.nahuelvalencia.details.data.datasource.CharacterDataSourceImpl
 import com.nahuelvalencia.details.utils.apiCallHandler
+import com.nahuelvalencia.details.utils.coroutine.MainCoroutineScopeRule
 import com.nahuelvalencia.details.utils.getJsonStringFromFile
 import com.nahuelvalencia.details.utils.retrofit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +24,7 @@ class CharacterDataSourceTest {
     @get:Rule
     val mainCoroutineScopeRule = MainCoroutineScopeRule()
 
-    private fun createDataSource(): CharacterDataSource = CharacterDataSource(
+    private fun createDataSource(): CharacterDataSourceImpl = CharacterDataSourceImpl(
         api = retrofit(mockWebServer.url("/")).create(CharacterApi::class.java),
         apiCallHandler = apiCallHandler(),
         dispatcher = mainCoroutineScopeRule.dispatcher
@@ -39,16 +39,16 @@ class CharacterDataSourceTest {
                 .setResponseCode(200)
                 .setBody(
                     getJsonStringFromFile(
-                        fileName = "characters-list-success.json",
+                        fileName = "characters-by-Id-success.json",
                         classLoader = javaClass.classLoader
                     )
                 )
         )
 
-        sut.invoke(213245).fold(
+        sut.getCharacterById(213245).fold(
             ifLeft = { fail("Expected a success response but fails with: ${it.error}") },
             ifRight = {
-                assertEquals(it.data.results.size, 5)
+                assertEquals(it.data.results.size, 1)
             }
         )
     }

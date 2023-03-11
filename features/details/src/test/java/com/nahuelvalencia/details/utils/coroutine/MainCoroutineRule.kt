@@ -1,4 +1,4 @@
-package com.nahuelvalencia.details.coroutine
+package com.nahuelvalencia.details.utils.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -13,7 +13,7 @@ internal class CharacterRepositoryImpl(
 ) : CharacterRepository {
 
     override suspend fun getCharacterById(id: Long): Either<NetworkError, Character> =
-        dataSource.invoke(id = id).mapLeft { networkError ->
+        dataSource.getCharacterById(id = id).mapLeft { networkError ->
             networkError //TODO: Map NetworkError to a feature specific Error
         }.flatMap { marvelResponseDto ->
             marvelResponseDto.data.results.first().toDomain().right()
