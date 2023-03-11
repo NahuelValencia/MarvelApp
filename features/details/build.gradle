@@ -57,8 +57,12 @@ dependencies {
 
     //Mockito
     testImplementation 'org.mockito.kotlin:mockito-kotlin:4.1.0'
+    testImplementation 'org.mockito:mockito-inline:4.8.1'
 
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+
+    //Turbine
+    testImplementation 'app.cash.turbine:turbine:0.11.0'
 
     //Hilt
     implementation 'com.google.dagger:hilt-android:2.45'
