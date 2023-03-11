@@ -36,7 +36,7 @@ class ViewModelTests {
 
             assertEquals(DetailsUIState.Loading, awaitItem())
 
-            assert(awaitItem() is DetailsUIState.Content)
+            assertEquals(DetailsUIState.Content(character = character.toUI()), awaitItem())
 
             expectNoEvents()
 

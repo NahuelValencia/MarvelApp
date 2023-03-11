@@ -3,7 +3,7 @@ package com.nahuelvalencia.details.presentation.components.model
 import com.nahuelvalencia.details.domain.model.Category
 import com.nahuelvalencia.details.domain.model.Character
 
-class CharacterUi(
+data class CharacterUi(
     val name: String,
     val description: String,
     val image: String,
