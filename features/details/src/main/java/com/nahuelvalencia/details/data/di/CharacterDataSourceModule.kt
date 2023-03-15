@@ -1,7 +1,7 @@
 package com.nahuelvalencia.details.data.di
 
 import com.nahuelvalencia.details.data.datasource.CharacterApi
-import com.nahuelvalencia.details.data.datasource.CharacterDataSource
+import com.nahuelvalencia.details.data.datasource.CharacterDataSourceImpl
 import com.nahuelvalencia.network.di.IoDispatcher
 import com.nahuelvalencia.network.handler.ApiCallHandler
 import dagger.Module
@@ -19,6 +19,6 @@ class CharacterDataSourceModule {
         api: CharacterApi,
         apiCallHandler: ApiCallHandler,
         @IoDispatcher dispatcher: CoroutineDispatcher
-    ): CharacterDataSource = CharacterDataSource(api, apiCallHandler, dispatcher)
+    ): CharacterDataSourceImpl = CharacterDataSourceImpl(api, apiCallHandler, dispatcher)
 
 }

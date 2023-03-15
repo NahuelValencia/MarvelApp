@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.sql.Timestamp
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 
 private const val BASE_URL = "https://gateway.marvel.com/"
@@ -45,6 +46,9 @@ class NetworkModule {
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(urlConfig)
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -56,8 +60,10 @@ class NetworkModule {
         val md5Hash = md5("$ts${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}")
         val r = chain.request().let { request ->
             request.newBuilder().url(
-                request.url.newBuilder().addQueryParameter(KEY, BuildConfig.PUBLIC_KEY)
-                    .addQueryParameter(TIMESTAMP, ts).addQueryParameter(HASH, md5Hash).build()
+                request.url.newBuilder()
+                    .addQueryParameter(KEY, BuildConfig.PUBLIC_KEY)
+                    .addQueryParameter(TIMESTAMP, ts)
+                    .addQueryParameter(HASH, md5Hash).build()
             ).build()
         }
         chain.proceed(r)

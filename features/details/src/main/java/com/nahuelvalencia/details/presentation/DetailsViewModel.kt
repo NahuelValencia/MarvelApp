@@ -28,20 +28,19 @@ class DetailsViewModel @Inject constructor(
 
         getCharacterById(characterId = id).fold({ error ->
             handleError(error)
-        }, { list ->
-            handleResponse(list)
+        }, { character ->
+            handleResponse(character)
         })
 
     }
 
     private fun handleError(error: NetworkError) {
-        Log.i("ViewModel", "Error: ${error.error}")
         _state.value = DetailsUIState.Error(error = error.error)
     }
 
     private fun handleResponse(character: Character) {
-        Log.i("ViewModel", "Response: ${character.image}")
-        _state.value = DetailsUIState.Content(character = character.toUI())
+        val characterUI = character.toUI()
+        _state.value = DetailsUIState.Content(character = characterUI)
     }
 
 }

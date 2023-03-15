@@ -8,13 +8,17 @@ import com.nahuelvalencia.network.handler.ApiCallHandler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-internal class CharacterDataSource(
+internal interface CharacterDataSource {
+    suspend fun getCharacterById(id: Long): Either<NetworkError, MarvelResponseDto<CharacterDto>>
+}
+
+internal class CharacterDataSourceImpl(
     private val api: CharacterApi,
     private val apiCallHandler: ApiCallHandler,
     private val dispatcher: CoroutineDispatcher
-) {
+) : CharacterDataSource {
 
-    suspend operator fun invoke(id: Long): Either<NetworkError, MarvelResponseDto<CharacterDto>> =
+    override suspend fun getCharacterById(id: Long): Either<NetworkError, MarvelResponseDto<CharacterDto>> =
         withContext(dispatcher) {
             apiCallHandler.handleResponse { api.getCharacterById(characterId = id) }
         }

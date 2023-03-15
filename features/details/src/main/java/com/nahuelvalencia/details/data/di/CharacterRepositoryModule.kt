@@ -1,6 +1,6 @@
 package com.nahuelvalencia.details.data.di
 
-import com.nahuelvalencia.details.data.datasource.CharacterDataSource
+import com.nahuelvalencia.details.data.datasource.CharacterDataSourceImpl
 import com.nahuelvalencia.details.data.repository.CharacterRepositoryImpl
 import com.nahuelvalencia.details.domain.repository.CharacterRepository
 import dagger.Module
@@ -14,7 +14,7 @@ class CharacterRepositoryModule {
 
     @Provides
     internal fun providesCharacterRepositoryModule(
-        dataSource: CharacterDataSource
+        dataSource: CharacterDataSourceImpl
     ): CharacterRepository = CharacterRepositoryImpl(dataSource)
 
 }
